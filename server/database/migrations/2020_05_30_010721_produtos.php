@@ -15,7 +15,7 @@ class Produtos extends Migration
     {
         Schema::create('produtos', function (Blueprint $table) {
             $table->increments('id_produto');
-            $table->string('nome', 45);
+            $table->string('nome_produto', 45);
             $table->string('descricao', 255);
             $table->decimal('preco', 8, 2);
             $table->enum('categoria', ['bebida', 'entrada', 'principal', 'sobremesa']);
