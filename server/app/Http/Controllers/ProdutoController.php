@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\ItensPedido;
-use App\Helper\DestroyProduct;
-use Illuminate\Http\Request;
-use App\Produto;
 use File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProdutoController extends Controller
@@ -60,16 +57,15 @@ class ProdutoController extends Controller
         {
             $image_path = "img/produtos/".$id_produto.".jpg";
             if (File::exists($image_path))
-            {
-                DB::beginTransaction();
-                    File::delete($image_path);
-                    Produto::destroy($id_produto);
-                DB::rollBack();
+                File::delete($image_path);
+            
+            $qnt = Produto::destroy($id_produto);
+            if($qnt === 0)
                 return response()->json('', 204);
-            }
+                
             return response()->json(['erro' => 'Erro ao excluir o produto, contate o administrador do sistema'], 404);
         }
-        return response()->json(['erro' => 'Erro ao excluir o produdo!'], 404);
+        return response()->json(['erro' => 'Não é possível excluir o produto em questão!'], 404);
     }
 
     public function edit(int $id_produto, Request $request)

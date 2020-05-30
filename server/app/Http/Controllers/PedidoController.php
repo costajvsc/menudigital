@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;;
+use Illuminate\Support\Facades\DB;
 use App\Produto;
-use App\Pedido;
 use App\ItensPedido;
 
 
@@ -56,7 +55,7 @@ class PedidoController extends Controller
 
     public function update(int $id_pedido, Request $request)
     {
-        $pedido = Pedido::find($request->id_pedido);
+        $pedido = Pedido::find($id_pedido);
 
         if(is_null($pedido))
             return response()->json('',204);
@@ -77,9 +76,7 @@ class PedidoController extends Controller
 
         if(is_null($itens_pedido))
             return response()->json('', 204);
-            
+
         return json_encode($itens_pedido);
     }
-
-    
 }
