@@ -18,6 +18,7 @@ class Produtos extends Migration
             $table->string('nome_produto', 45);
             $table->string('descricao', 255);
             $table->decimal('preco', 8, 2);
+            $table->string('ext', 4);
             $table->enum('categoria', ['bebida', 'entrada', 'principal', 'sobremesa']);
             $table->boolean('status');
             $table->timestamps();
