@@ -45,7 +45,7 @@ class FuncionarioController extends Controller
         return response()->json($funcionario, 200);
     }
 
-    public function distroy(int $id_pedido)
+    public function destroy(int $id_pedido)
     {
         $qnt = Funcionario::destroy($id_aluno);
 

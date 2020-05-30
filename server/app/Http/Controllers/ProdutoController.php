@@ -68,7 +68,7 @@ class ProdutoController extends Controller
         return response()->json(['erro' => 'Não é possível excluir o produto em questão!'], 404);
     }
 
-    public function edit(int $id_produto, Request $request)
+    public function update(int $id_produto, Request $request)
     {
         $produto = Produto::find($id_produto);
 
