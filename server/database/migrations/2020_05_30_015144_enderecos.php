@@ -32,6 +32,6 @@ class Enderecos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('produtos');
+        Schema::dropIfExists('enderecos');
     }
 }
