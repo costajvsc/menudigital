@@ -15,17 +15,18 @@ $router->group(['prefix' => '/api'], function () use ($router) {
     $router->group(['prefix' => 'produtos'], function () use ($router) {    
         $router->get('/', 'ProdutoController@index');
         $router->post('/', 'ProdutoController@store');
-        $router->get('/{id_aluno}', 'ProdutoController@show');
-        $router->put('/{id_aluno}', 'ProdutoController@update');
-        $router->delete('/{id_aluno}', 'ProdutoController@destroy');
+        $router->get('/{id_produto}', 'ProdutoController@show');
+        $router->put('/{id_produto}', 'ProdutoController@update');
+        $router->delete('/{id_produto}', 'ProdutoController@destroy');
     });
 
     $router->group(['prefix' => 'pedidos'], function () use ($router) {    
         $router->get('/', 'PedidoController@index');
-        $router->get('/itens/{id_sala}', 'PedidoController@itens_pedido');
+        $router->get('/{id_pedido}', 'PedidoController@show');
+        $router->get('/itens/{id_pedido}', 'PedidoController@itens_pedido');
         $router->post('/', 'PedidoController@store');
-        $router->get('/{id_sala}', 'PedidoController@show');
-        $router->put('/{id_sala}', 'PedidoController@update');
+        $router->put('/finish/{id_pedido}', 'PedidoController@finish');
+        $router->put('/cancel/{id_pedido}', 'PedidoController@cancel');
     });
 
     $router->group(['prefix' => 'funcionarios'], function () use ($router) {    

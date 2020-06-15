@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Funcionario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class FuncionarioController extends Controller
+class FuncionarioController 
 {
     public function index(Request $request)
     {
@@ -25,8 +26,8 @@ class FuncionarioController extends Controller
     public function store(Request $request)
     {
         $funcionario = Funcionario::create($request->all());
-        
-        if(empty($produto))
+
+        if(empty($funcionario))
             return response()->json(['erro' => 'Erro ao inserir funcionairo.'], 404);
 
         return response()->json(['message' => 'Funcionario inserido com sucesso!'], 201);
@@ -40,7 +41,7 @@ class FuncionarioController extends Controller
             return response()->json('',204);
 
         $funcionario->fill($request->all());
-        $funcionario->savef();
+        $funcionario->save();
 
         return response()->json($funcionario, 200);
     }

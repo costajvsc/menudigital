@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use File;
+use App\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;    
 
-class ProdutoController extends Controller
+class ProdutoController 
 {
     public function index(Request $request)
     {
@@ -15,7 +16,7 @@ class ProdutoController extends Controller
 
     public function show(int $id_produto)
     {
-        $produto = Produto::find($id);
+        $produto = Produto::find($id_produto);
 
         if (is_null($produto))
             return response()->json('', 204);
@@ -25,22 +26,16 @@ class ProdutoController extends Controller
 
     public function store(Request $request)
     {
-        $img = $request->file('img_produto');
-        $ext = $img->getClientOriginalExtension();
-
         DB::beginTransaction();
-            $produto = Aluno::create([
+            $produto = Produto::create([
                 'nome_produto' => $request->nome_produto,
                 'descricao' => $request->descricao,
                 'preco' => $request->preco,
                 'categoria' => $request->categoria,
                 'status' => ($request->status == 'ativo') ? 1 : 0,
-                'ext' => $request->ext
+                'ext' => $request->file('img_produto')->extension()
             ]);
-
-            $input['imgname'] = $produto->id.'.'.$ext;
-            $path = public_path('/img/produtos');
-            $img->move($path, $input['imgname']);
+            $request->file('img_produto')->move('img/produtos', $produto->id_produto.'.'.$produto->ext);
         DB::commit();
 
         if(empty($produto))
@@ -55,15 +50,21 @@ class ProdutoController extends Controller
 
         if(is_null($itens))
         {
-            $image_path = "img/produtos/".$id_produto.".jpg";
+            $produto = Produto::find($id_produto);
+
+            if (is_null($produto))
+                return response()->json('', 204);
+
+            $image_path = "img/produtos/".$id_produto.".".$produto->ext;
             if (File::exists($image_path))
                 File::delete($image_path);
             
             $qnt = Produto::destroy($id_produto);
             if($qnt === 0)
-                return response()->json('', 204);
+                return response()->json(['erro' => 'Erro ao excluir o produto, contate o administrador do sistema'], 404);
                 
-            return response()->json(['erro' => 'Erro ao excluir o produto, contate o administrador do sistema'], 404);
+            return response()->json('', 204);
+
         }
         return response()->json(['erro' => 'Não é possível excluir o produto em questão!'], 404);
     }
@@ -71,32 +72,26 @@ class ProdutoController extends Controller
     public function update(int $id_produto, Request $request)
     {
         $produto = Produto::find($id_produto);
-
         if(empty($produto))
             return response()->json(['erro' => 'Produto não encontrado'], 404);
 
         DB::beginTransaction();
         if(isset($request->img_produto))
         {
-            $img = $request->file('img_produto');
-            $ext = $img->getClientOriginalExtension();
-
             $produto->nome_produto = $request->nome_produto;
             $produto->descricao = $request->descricao;
             $produto->preco = $request->preco;
             $produto->categoria = $request->categoria;
-            $produto->ext = $ext;
+            $produto->ext = $request->file('img_produto')->extension();
             $produto->status = ($request->status == 'ativo') ? 1 : 0;
             $produto->save();
 
-            if(File::exists("img/produtos/{$produto->id_produto}.{$produto->ext}"))
+            if(File::exists("img/produtos/{$produto->id_produto}.{$produto->ext}")){
                 File::delete("img/produtos/{$produto->id_produto}.{$produto->ext}");
-
-            $input['imgname'] = $request->id_produto.'.'.$ext;
-            $path = public_path('/img/produtos/');
-            $img->move($path, $input['imgname']);
+                $request->file('img_produto')->move('img/produtos', $produto->id_produto.'.'.$produto->ext);
+            }
             
-            return response()->json(['message' => 'Produto alterado com sucesso!'], 200);
+            return response()->json(['message' => 'Produto e imagem alterado com sucesso!'], 200);
         }
         else
         {
