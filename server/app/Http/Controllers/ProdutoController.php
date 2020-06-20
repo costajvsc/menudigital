@@ -71,6 +71,7 @@ class ProdutoController
 
     public function update(int $id_produto, Request $request)
     {
+        
         $produto = Produto::find($id_produto);
         if(empty($produto))
             return response()->json(['erro' => 'Produto não encontrado'], 404);

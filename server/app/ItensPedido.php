@@ -8,7 +8,7 @@ class ItensPedido extends Model
 {
     protected $table = 'itens_pedido';
     protected $primaryKey = 'id_item_produto';
-    protected $fillable = ['id_item_produto', 'id_produto', 'id_pedido'];
+    protected $fillable = ['id_item_produto', 'id_produto', 'id_pedido', 'avaliacao_produto'];
 
     public function pedido()
     {

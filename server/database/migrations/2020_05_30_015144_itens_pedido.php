@@ -17,6 +17,7 @@ class ItensPedido extends Migration
             $table->increments('id_item_produto');
             $table->unsignedInteger('id_produto');
             $table->unsignedInteger('id_pedido');
+            $table->tinyInteger('avaliacao_produto')->nullable()    ;
             $table->foreign('id_produto')->references('id_produto')->on('produtos');
             $table->foreign('id_pedido')->references('id_pedido')->on('pedidos');
             $table->timestamps();

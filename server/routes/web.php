@@ -27,6 +27,8 @@ $router->group(['prefix' => '/api'], function () use ($router) {
         $router->post('/', 'PedidoController@store');
         $router->put('/finish/{id_pedido}', 'PedidoController@finish');
         $router->put('/cancel/{id_pedido}', 'PedidoController@cancel');
+        $router->put('/reting/{id_pedido}', 'PedidoController@reting');
+        
     });
 
     $router->group(['prefix' => 'funcionarios'], function () use ($router) {    
@@ -36,4 +38,13 @@ $router->group(['prefix' => '/api'], function () use ($router) {
         $router->put('/{id_funcionario}', 'FuncionarioController@update');
         $router->delete('/{id_funcionario}', 'FuncionarioController@destroy');
     });
+});
+
+Route::get('/mail', function(){
+    $user = (object)[
+        'email' => 'joao@teste.com',
+        'name' => 'João Victor'
+    ];
+    \Illuminate\Support\Facades\Mail::to($user)->send(new \App\Mail\CreatePedido(2));
+    return "email enviado";
 });
