@@ -39,12 +39,6 @@ $router->group(['prefix' => '/api'], function () use ($router) {
         $router->delete('/{id_funcionario}', 'FuncionarioController@destroy');
     });
 });
-
-Route::get('/mail', function(){
-    $user = (object)[
-        'email' => 'joao@teste.com',
-        'name' => 'João Victor'
-    ];
-    \Illuminate\Support\Facades\Mail::to($user)->send(new \App\Mail\CreatePedido(2));
-    return "email enviado";
+Route::get('/product', function () {
+    return view('meta/produto');
 });
