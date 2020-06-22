@@ -16,7 +16,7 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <div>
-                    <a class="navbar-brand" href="/dahsbard">Dashboard</a>
+                    <a class="navbar-brand" href="/dashboard">Dashboard</a>
                 </div>
 
                 <div>

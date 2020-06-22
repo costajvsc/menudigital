@@ -29,6 +29,7 @@ class Funcionarios extends Migration
             $table->string('conta',9)->nullable();
             $table->enum('cargo', ['cozinheiro', 'auxiliar', 'garcon', 'gerente'])->nullable();
             $table->enum('status', ['Cadastrado','contratado', 'desligado', 'ferias']);
+            $table->timestamps();
         });
     }
 

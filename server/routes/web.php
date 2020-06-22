@@ -42,3 +42,6 @@ $router->group(['prefix' => '/api'], function () use ($router) {
 Route::get('/product', function () {
     return view('meta/produto');
 });
+Route::get('/dashboard', function () {
+    return view('meta/dashboard');
+});

@@ -16,7 +16,12 @@ class PedidoController
 {
     public function index(Request $request)
     {
-        return Pedido::all()->where('status', '=', "Em produção");
+        $pedido = DB::table('pedidos')
+                    ->select('pedidos.*', 'funcionarios.nome_funcionario')
+                    ->leftJoin('funcionarios', 'pedidos.id_funcionario', '=', 'funcionarios.id_funcionario')
+                    ->where('pedidos.status', '=', "Em produção")->get();
+        return $pedido;
+
     }
 
     public function show(int $id_pedido)
@@ -25,8 +30,8 @@ class PedidoController
         
         if (is_null($pedido))
             return response()->json('', 204);
-
-        return response()->json($pedido);
+        
+        return $pedido;
     }
 
     public function store(Request $request)

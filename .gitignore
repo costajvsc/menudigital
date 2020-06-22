@@ -1,2 +1,2 @@
 workspace.code-workspace
-img\produtos\*.*
+server/public/img/produtos/*
