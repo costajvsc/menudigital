@@ -1,6 +1,6 @@
 class ProdutoList{
     constructor(){
-        this.lista = [];
+        this._lista = [];
     }
 
     push(produto){

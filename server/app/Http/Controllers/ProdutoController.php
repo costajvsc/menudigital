@@ -109,4 +109,13 @@ class ProdutoController
 
         return response()->json(['erro' => 'Erro ao alterar produto produto'], 404);
     }
+
+    public function page(Request $request)
+    {
+        $bebida = Produto::query()->where([['categoria', '=', 'bebida'], ['status', '=', '1']])->get();
+        $entrada = Produto::query()->where('categoria', '=', 'entrada')->where('status', '=', '1')->get();
+        $principal = Produto::query()->where('categoria', '=', 'principal')->where('status', '=', '1')->get();
+        $sobremesa = Produto::query()->where('categoria', '=', 'sobremesa')->where('status', '=', '1')->get();
+        return view('client/index', compact('entrada', 'bebida', 'principal', 'sobremesa'));
+    }
 }

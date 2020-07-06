@@ -39,9 +39,6 @@ $router->group(['prefix' => '/api'], function () use ($router) {
         $router->delete('/{id_funcionario}', 'FuncionarioController@destroy');
     });
 });
-Route::get('/product', function () {
-    return view('meta/produto');
-});
-Route::get('/dashboard', function () {
-    return view('meta/dashboard');
-});
+Route::get('/product', function () { return view('meta/produto'); });
+Route::get('/dashboard', function () { return view('meta/dashboard'); });
+Route::get('/', 'ProdutoController@page');
